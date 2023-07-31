@@ -13,3 +13,58 @@ Simple Elysia API for interaction with the Ethereum blockchain.
 <a href="https://soliditylang.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/DEMYSTIF/DEMYSTIF/main/assets/icons/solidity.svg" width="36" height="36" alt="Solidity" /></a>
 <a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/DEMYSTIF/DEMYSTIF/main/assets/icons/typescript.svg" width="36" height="36" alt="TypeScript" /></a>
 </div>
+
+## ⚙️ Run Locally
+
+Clone the project
+
+```bash
+git clone https://github.com/DEMYSTIF/elysia-ethers-api.git
+cd elysia-ethers-api
+```
+
+Install Bun
+
+```bash
+curl -fsSL https://bun.sh/install | bash
+```
+
+Install dependencies for hardhat
+
+```bash
+cd hardhat
+pnpm install
+```
+
+Run a blockchain simulation (ganache/geth/foundry), on port **8545**.
+
+Deploy the contract
+
+```bash
+pnpm run deploy
+```
+
+Install dependencies for api
+
+```bash
+cd ..
+bun install
+```
+
+Start the application
+
+```bash
+bun run dev
+```
+
+Issue a certificate (new terminal)
+
+```bash
+curl -X POST http://localhost:3000/issue -H "Content-Type: application/json" -d '{"id": 9, "name": "Langley", "course": "MBCC", "grade": "A", "date": "01-02-03"}'
+```
+
+Fetch a certificate
+
+```bash
+curl http://localhost:3000/fetch?id=9
+```
