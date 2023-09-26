@@ -7,7 +7,7 @@
   },
   "dependencies": {
     "elysia": "latest",
-    "ethers": "^6.6.6"
+    "ethers": "latest"
   },
   "devDependencies": {
     "bun-types": "latest"
