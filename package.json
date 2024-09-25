@@ -10,7 +10,9 @@
     "ethers": "latest"
   },
   "devDependencies": {
-    "bun-types": "latest"
+		"@nomicfoundation/hardhat-toolbox": "latest",
+		"bun-types": "latest",
+		"hardhat": "latest"
   },
   "module": "src/index.js"
 }
