@@ -2,7 +2,8 @@
 	"name": "elysia-ethers-api",
 	"version": "1.0.44",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
+    "node": "bunx hardhat node",
+    "deploy": "bunx hardhat ignition deploy ignition/modules/Cert.ts",
 		"dev": "bun run --watch src/index.ts"
 	},
 	"dependencies": {
