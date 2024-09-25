@@ -1,18 +1,19 @@
 {
-  "name": "elysia-ethers-api",
-  "version": "1.0.44",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/index.ts"
-  },
-  "dependencies": {
-    "elysia": "latest",
-    "ethers": "latest"
-  },
-  "devDependencies": {
+	"name": "elysia-ethers-api",
+	"version": "1.0.44",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "bun run --watch src/index.ts"
+	},
+	"dependencies": {
+		"elysia": "latest",
+		"ethers": "latest"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "latest",
 		"@nomicfoundation/hardhat-toolbox": "latest",
 		"bun-types": "latest",
 		"hardhat": "latest"
-  },
-  "module": "src/index.js"
+	},
+	"module": "src/index.js"
 }
