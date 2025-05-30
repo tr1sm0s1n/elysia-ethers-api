@@ -1,20 +1,25 @@
 {
-	"name": "elysia-ethers-api",
-	"version": "1.0.44",
+	"name": "elysia-viem-api",
+	"module": "src/index.ts",
+	"private": true,
 	"scripts": {
-    "node": "bunx hardhat node",
-    "deploy": "bunx hardhat ignition deploy ignition/modules/Cert.ts",
-		"dev": "bun run --watch src/index.ts"
-	},
-	"dependencies": {
-		"elysia": "latest",
-		"ethers": "latest"
+		"node": "bunx hardhat node",
+		"test": "bunx hardhat test",
+		"deploy": "bunx hardhat ignition deploy ignition/modules/Cert.ts --network local",
+		"dev": "bun run --watch src/index.ts",
+		"fmt": "bunx biome format --write"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "latest",
-		"@nomicfoundation/hardhat-toolbox": "latest",
-		"bun-types": "latest",
+		"@nomicfoundation/hardhat-toolbox-viem": "latest",
+		"@types/bun": "latest",
 		"hardhat": "latest"
 	},
-	"module": "src/index.js"
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"elysia": "latest",
+		"viem": "latest"
+	}
 }

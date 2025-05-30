@@ -1,54 +1,45 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
+# dependencies (bun install)
 node_modules
-/.pnp
-.pnp.js
 
-# testing
+# output
+out
+dist
+*.tgz
+
+# code coverage
 coverage
-coverage.json
+*.lcov
 
-# next.js
-/.next/
-/out/
+# logs
+logs
+_.log
+report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
-# production
-/build
-build-info
-
-# misc
-.DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# local env files
-.env.local
+# dotenv environment variable files
+.env
 .env.development.local
 .env.test.local
 .env.production.local
+.env.local
 
-# vercel
-.vercel
+# caches
+.eslintcache
+.cache
+*.tsbuildinfo
 
-**/*.trace
-**/*.zip
-**/*.tar.gz
-**/*.tgz
-**/*.log
-package-lock.json
-**/*.bun
+# IntelliJ based IDEs
+.idea
 
-# hardhat
+# Finder (MacOS) folder config
+.DS_Store
+
+# Hardhat files
+artifacts
+cache
+
+# TypeChain files
 typechain
 typechain-types
-cache
-artifacts
-details.json
 
 # Hardhat Ignition default folder for deployments against a local node
 ignition/deployments/chain-31337
