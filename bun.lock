@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "elysia-ethers-api",
+      "name": "elysia-viem-api",
       "dependencies": {
         "elysia": "latest",
         "viem": "latest",
