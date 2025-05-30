@@ -1,49 +1,77 @@
-import { loadFixture } from '@nomicfoundation/hardhat-toolbox/network-helpers'
+import { loadFixture } from '@nomicfoundation/hardhat-toolbox-viem/network-helpers'
 import { expect } from 'chai'
 import hre from 'hardhat'
+import { getCreateAddress, keccak256, toHex } from 'viem'
 
-describe('Cert', function () {
+describe('Cert', () => {
 	async function deployCertFixture() {
-		const [admin, other] = await hre.ethers.getSigners()
+		const [admin, other] = await hre.viem.getWalletClients()
+		const cert = await hre.viem.deployContract('Cert')
+		const client = await hre.viem.getPublicClient()
 
-		const Cert = await hre.ethers.getContractFactory('Cert')
-		const cert = await Cert.deploy()
-
-		return { cert, admin, other }
+		return { cert, admin, other, client }
 	}
 
-	it('Should set the right admin', async function () {
+	it('Should set the right admin', async () => {
 		const { cert, admin } = await loadFixture(deployCertFixture)
 
-		expect(cert.deploymentTransaction()?.from).to.equal(admin.address)
+		const contractAddress = getCreateAddress({
+			from: admin.account.address,
+			nonce: 0n,
+		})
+
+		expect(cert.address).to.equal(contractAddress.toLowerCase())
 	})
 
-	it('Should issue the certificate', async function () {
-		const { cert } = await loadFixture(deployCertFixture)
+	it('Should issue the certificate', async () => {
+		const { cert, client } = await loadFixture(deployCertFixture)
 
-		await expect(cert.issue(1024, 'Deren', 'EDP', 'S', '16-05-2024'))
-			.to.emit(cert, 'Issued')
-			.withArgs('EDP', 1024, 'S')
+		const hash = await cert.write.issue([
+			14n,
+			'Deren',
+			'MBCC',
+			'S',
+			'30-05-2025',
+		])
+		await client.waitForTransactionReceipt({ hash })
+
+		const event = await cert.getEvents.Issued()
+
+		expect(event).to.have.lengthOf(1)
+		expect(event[0].args.course).to.equal(keccak256(toHex('MBCC')))
+		expect(event[0].args.id).to.equal(14n)
+		expect(event[0].args.grade).to.equal('S')
 	})
 
-	it('Should read the certificate', async function () {
-		const { cert } = await loadFixture(deployCertFixture)
+	it('Should read the certificate', async () => {
+		const { cert, client } = await loadFixture(deployCertFixture)
 
-		await cert.issue(1024, 'Shalom', 'EDP', 'S', '16-05-2024')
+		const hash = await cert.write.issue([
+			885n,
+			'Shawn',
+			'MBCC',
+			'A',
+			'28-05-2025',
+		])
+		await client.waitForTransactionReceipt({ hash })
 
-		const certificate = await cert.Certificates(1024)
+		const certificate = await cert.read.Certificates([885n])
 
-		expect(certificate[0]).to.equal('Shalom')
-		expect(certificate[1]).to.equal('EDP')
-		expect(certificate[2]).to.equal('S')
-		expect(certificate[3]).to.equal('16-05-2024')
+		expect(certificate[0]).to.equal('Shawn')
+		expect(certificate[1]).to.equal('MBCC')
+		expect(certificate[2]).to.equal('A')
+		expect(certificate[3]).to.equal('28-05-2025')
 	})
 
-	it('Should revert the issuing', async function () {
+	it('Should revert the issuing', async () => {
 		const { cert, other } = await loadFixture(deployCertFixture)
 
+		const certWithOther = await hre.viem.getContractAt('Cert', cert.address, {
+			client: { wallet: other },
+		})
+
 		await expect(
-			cert.connect(other).issue(1024, 'Yao', 'EDP', 'S', '16-05-2024'),
-		).to.be.revertedWith('Access Denied')
+			certWithOther.write.issue([355n, 'Lisa', 'MBCC', 'B', '31-05-2025']),
+		).to.be.rejectedWith('Access Denied')
 	})
 })
